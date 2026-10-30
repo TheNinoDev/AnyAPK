@@ -19,6 +19,10 @@
 if you have any questions or a apk dont runs
 ### Join our [Discord](https://restorecord.com/verify/AnyAPK?r=d6ff458180b1)
 
+
+<h2 align="center">Star History</h2>
+
+
 <a href="https://www.star-history.com/?repos=theninodev%2Fanyapk&type=date&legend=bottom-right">
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=theninodev/anyapk&type=date&theme=dark&legend=bottom-right" />
