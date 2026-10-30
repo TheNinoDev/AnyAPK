@@ -1,288 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnyAPK - Run Android APKs natively on Windows</title>
-    <meta name="description" content="AnyAPK runs Android APKs natively on Windows without an emulator. Download the latest release.">
-    <style>
-        :root {
-            --bg: #0b0f1a;
-            --card: #151a2b;
-            --accent: #ff6b35;
-            --accent2: #ffb347;
-            --text: #e8eaf0;
-            --muted: #9aa3b2;
-            --border: #2a3150;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: radial-gradient(1200px 600px at 50% -10%, #1a2140, var(--bg));
-            color: var(--text);
-            min-height: 100vh;
-        }
-        header {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2.5rem 1.5rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: .75rem;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-        .logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            display: grid;
-            place-items: center;
-            font-weight: 800;
-            color: #1a0f00;
-        }
-        nav a {
-            color: var(--muted);
-            text-decoration: none;
-            margin-left: 1.25rem;
-            font-size: .95rem;
-        }
-        nav a:hover { color: var(--text); }
-        main {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem 4rem;
-        }
-        .hero {
-            display: grid;
-            grid-template-columns: 1.1fr .9fr;
-            gap: 2.5rem;
-            align-items: center;
-            padding: 2rem 0 3rem;
-        }
-        @media (max-width: 860px) {
-            .hero { grid-template-columns: 1fr; }
-        }
-        h1 {
-            font-size: clamp(2.2rem, 5vw, 3.4rem);
-            line-height: 1.05;
-            margin: 0 0 1rem;
-        }
-        .accent { color: var(--accent2); }
-        .lead {
-            color: var(--muted);
-            font-size: 1.15rem;
-            line-height: 1.6;
-            margin: 0 0 1.75rem;
-            max-width: 560px;
-        }
-        .cta-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .75rem;
-            align-items: center;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            padding: .85rem 1.25rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            border: 1px solid transparent;
-            transition: transform .12s ease, background .12s ease;
-        }
-        .btn:hover { transform: translateY(-1px); }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: #1a0f00;
-        }
-        .btn-ghost {
-            background: transparent;
-            border-color: var(--border);
-            color: var(--text);
-        }
-        .version {
-            color: var(--muted);
-            font-size: .85rem;
-            margin-top: .75rem;
-        }
-        .panel {
-            background: linear-gradient(180deg, #1a2036, #12172a);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,.35);
-        }
-        .panel h3 { margin: 0 0 .75rem; font-size: 1rem; color: var(--accent2); }
-        .panel pre {
-            margin: 0;
-            font-family: ui-monospace, Consolas, monospace;
-            font-size: .85rem;
-            color: #cfd6e6;
-            white-space: pre-wrap;
-            word-break: break-word;
-            line-height: 1.5;
-        }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        .feature {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.25rem;
-        }
-        .feature h4 { margin: 0 0 .4rem; }
-        .feature p { margin: 0; color: var(--muted); line-height: 1.5; font-size: .95rem; }
-        .icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            background: #1f2540;
-            display: grid;
-            place-items: center;
-            margin-bottom: .75rem;
-            font-size: 1.1rem;
-        }
-        footer {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem 3rem;
-            border-top: 1px solid var(--border);
-            color: var(--muted);
-            font-size: .9rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: .75rem;
-        }
-        footer a { color: var(--accent2); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AnyAPK - Run Android APKs natively on Windows</title>
+<meta name="description" content="AnyAPK runs Android APKs natively on Windows without an emulator. Download the latest release.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23ff7a45'/%3E%3Cpath d='M9 23 16 8l7 15h-3.2L16 14.6 12.2 23z' fill='%231a0d00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0f1d;--card:#141830;--line:#262c4d;--text:#eceffb;--muted:#98a1bd;
+  --a1:#ff7a45;--a2:#ffc065;--c1:#7c8cff;--c2:#4de0d0;
+  --font:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.5}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(900px 500px at 15% -10%,#1d2450,transparent 70%),radial-gradient(700px 500px at 100% 20%,#2a1a3d,transparent 70%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask:radial-gradient(420px circle at var(--gx,50%) var(--gy,30%),#000,transparent 70%);
+  mask:radial-gradient(420px circle at var(--gx,50%) var(--gy,30%),#000,transparent 70%)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--a2);outline-offset:3px;border-radius:8px}
+
+/* header */
+header{max-width:1120px;margin:0 auto;padding:1.5rem 1.5rem .5rem;display:flex;align-items:center;justify-content:center;gap:1rem}
+nav{position:relative;display:flex;gap:.25rem;padding:.3rem;border-radius:999px;background:rgba(20,24,48,.6);border:1px solid var(--line);backdrop-filter:blur(8px)}
+nav a{position:relative;z-index:1;text-decoration:none;color:var(--muted);padding:.4rem .9rem;border-radius:999px;font-size:.92rem;transition:color .2s}
+nav a:hover{color:var(--text)}
+.pill{position:absolute;z-index:0;top:.3rem;bottom:.3rem;left:0;width:0;border-radius:999px;background:linear-gradient(135deg,rgba(124,140,255,.35),rgba(77,224,208,.2));opacity:0;transition:transform .35s cubic-bezier(.3,1.3,.5,1),width .35s cubic-bezier(.3,1.3,.5,1),opacity .2s}
+
+main{max-width:1120px;margin:0 auto;padding:0 1.5rem}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center;padding:4rem 0 5rem}
+@media(max-width:880px){.hero{grid-template-columns:1fr;padding-top:2.5rem}}
+
+h1{font-size:clamp(2.6rem,6.4vw,4.6rem);line-height:1;letter-spacing:-.035em;font-weight:700;margin:0 0 1.4rem}
+h1 .w{display:inline-block;white-space:nowrap}
+h1 .ch{display:inline-block;transition:transform .18s ease-out,color .18s;will-change:transform}
+.lead{color:var(--muted);font-size:1.15rem;max-width:34em;margin:0 0 2rem}
+.term{color:var(--text);border-bottom:2px dotted var(--c2);cursor:help;transition:background .2s,color .2s;border-radius:3px}
+.term:hover,.term:focus-visible{background:rgba(77,224,208,.14);color:var(--c2)}
+
+/* buttons */
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem;align-items:flex-start}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:.65rem;padding:.9rem 1.4rem;border-radius:14px;border:1px solid var(--line);
+  background:rgba(20,24,48,.7);color:var(--text);font:inherit;font-weight:600;text-decoration:none;cursor:pointer;
+  transition:transform .25s cubic-bezier(.3,1.5,.5,1),opacity .25s,filter .25s,border-color .25s,background .25s}
+.cta-row:hover .btn:not(:hover):not(.keep){opacity:.5;filter:saturate(.5);transform:scale(.96)}
+.btn:hover{transform:scale(1.045);border-color:var(--c1)}
+.btn:active{transform:scale(.97)}
+.btn-primary{border:0;color:#1d0e00;background:linear-gradient(135deg,var(--a1),var(--a2));padding:.7rem 1.5rem .7rem 1.1rem;box-shadow:0 10px 34px -8px rgba(255,122,69,.6)}
+.btn-primary:hover{border:0;box-shadow:0 14px 44px -6px rgba(255,160,80,.85)}
+.btn-primary::before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s}
+.btn-primary:hover::before{transform:translateX(120%)}
+.btn-primary .ico{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:rgba(29,14,0,.14)}
+.btn-primary svg{width:20px;height:20px}
+.btn-primary:hover svg{animation:drop .9s ease-in-out infinite}
+@keyframes drop{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+.btn small{display:block;font-weight:500;font-size:.78rem;opacity:.75;line-height:1.2}
+.btn .t{line-height:1.2;text-align:left}
+.btn .chev{width:16px;height:16px;transition:transform .3s}
+.btn[aria-expanded=true]{border-color:var(--c2);background:rgba(77,224,208,.1)}
+.btn[aria-expanded=true] .chev{transform:rotate(180deg)}
+.btn-link{border:0;background:none;padding:.9rem .6rem}
+.btn-link span{background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .3s;padding-bottom:3px}
+.btn-link:hover{border:0;color:var(--a2)}
+.btn-link:hover span{background-size:100% 2px}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(1);opacity:0}}
+.meta{margin-top:1rem;color:var(--muted);font-size:.9rem;min-height:1.4em}
+.meta b{color:var(--text);font-weight:600}
+
+/* older versions bubble */
+.old{position:relative}
+.bubble{position:absolute;z-index:30;top:calc(100% + 14px);left:0;width:min(340px,86vw);background:#181d3a;border:1px solid var(--line);border-radius:18px;padding:.5rem;
+  box-shadow:0 24px 60px rgba(0,0,0,.5);transform-origin:28px -10px;animation:pop .35s cubic-bezier(.3,1.5,.5,1)}
+.bubble[hidden]{display:none}
+@keyframes pop{from{opacity:0;transform:scale(.6) translateY(-8px)}}
+.bubble::before{content:"";position:absolute;top:-7px;left:22px;width:14px;height:14px;background:#181d3a;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.bub-head{padding:.5rem .75rem .4rem;font-size:.82rem;color:var(--muted)}
+#vlist{list-style:none;margin:0;padding:0;max-height:280px;overflow:auto;scrollbar-width:thin}
+.row{display:flex;align-items:center;gap:.7rem;padding:.6rem .75rem;border-radius:12px;text-decoration:none;transition:background .2s,transform .2s}
+.row:hover,.row:focus-visible{background:rgba(124,140,255,.16);transform:translateX(4px)}
+.row .tag{font-weight:700}
+.row .date{color:var(--muted);font-size:.85rem;flex:1}
+.row .pre{font-size:.7rem;padding:.1rem .45rem;border-radius:99px;background:rgba(255,192,101,.18);color:var(--a2)}
+.row .dl{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.06);transition:background .2s,transform .3s}
+.row:hover .dl{background:var(--c1);transform:translateY(2px)}
+.row .dl svg{width:15px;height:15px}
+.empty{padding:.8rem .75rem 1rem;color:var(--muted);font-size:.92rem}
+.empty a{color:var(--a2)}
+
+#pop{position:fixed;z-index:50;max-width:290px;padding:.8rem .95rem;border-radius:14px;background:#0f1330;border:1px solid var(--c1);font-size:.86rem;line-height:1.45;color:var(--text);
+  box-shadow:0 16px 40px rgba(0,0,0,.5);pointer-events:none;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .18s,transform .18s}
+#pop.on{opacity:1;transform:none}
+#pop h5{margin:0 0 .25rem;font-size:.95rem}
+#pop .sub{color:var(--c2);font-size:.78rem;margin-bottom:.35rem}
+#pop p{margin:0;color:var(--muted)}
+#pop code{color:var(--a2);font-size:.82rem}
+
+.skel{height:44px;margin:.35rem .2rem;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.1),rgba(255,255,255,.04)) 0 0/200% 100%;animation:sk 1.2s linear infinite}
+@keyframes sk{to{background-position:-200% 0}}
+.more{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.3rem .2rem .2rem;padding:.65rem;border-radius:12px;text-decoration:none;font-weight:600;font-size:.92rem;color:var(--c2);border:1px dashed rgba(77,224,208,.4);transition:background .2s,transform .2s}
+.more:hover{background:rgba(77,224,208,.12);transform:translateY(-1px)}
+.more svg{width:15px;height:15px;transition:transform .3s}.more:hover svg{transform:translateX(4px)}
+#vpage{max-width:720px;padding:2rem 0 4rem;animation:vin .4s ease-out}
+@keyframes vin{from{opacity:0;transform:translateY(10px)}}
+.back{margin-bottom:1.8rem;padding:.6rem 1.1rem .6rem .8rem}
+.back svg{width:18px;height:18px;transition:transform .3s}.back:hover svg{transform:translateX(-4px)}
+.vwrap{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:.5rem;margin-top:1.5rem}
+#vlist2{list-style:none;margin:0;padding:0}
+
+/* hero window */
+.scene{perspective:1100px}
+.win{background:linear-gradient(180deg,#1b2145,#121631);border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.5);
+  transform:rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transition:transform .25s ease-out;overflow:hidden}
+.bar{display:flex;align-items:center;gap:.4rem;padding:.7rem .9rem;border-bottom:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.bar i{width:10px;height:10px;border-radius:50%;background:#3a4272}
+.bar i:first-child{background:var(--a1)}.bar i:nth-child(2){background:var(--a2)}.bar i:nth-child(3){background:var(--c2)}
+.bar span{margin-left:.5rem}
+.win pre{margin:0;padding:1.1rem 1.2rem 1.3rem;font:.84rem/1.65 ui-monospace,Consolas,monospace;color:#cfd6ee;white-space:pre-wrap;word-break:break-word}
+.win pre span{display:block;opacity:0;animation:line .5s forwards}
+.win pre span:nth-child(1){animation-delay:.4s}.win pre span:nth-child(2){animation-delay:1s}.win pre span:nth-child(3){animation-delay:1.6s}.win pre span:nth-child(4){animation-delay:2.2s}
+@keyframes line{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.k{color:var(--a2)}.l{color:var(--c2)}.cur{display:inline-block;width:8px;height:1em;background:var(--c2);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* sections */
+section{padding:2rem 0 3.5rem}
+h2{font-size:clamp(1.7rem,3.6vw,2.4rem);letter-spacing:-.025em;line-height:1.1;margin:0 0 .6rem}
+.sub2{color:var(--muted);margin:0 0 2rem;max-width:36em}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;counter-reset:s}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{counter-increment:s;padding:1.3rem 1.3rem 1.4rem;border-left:2px solid var(--line);transition:border-color .3s,transform .3s}
+.step:hover{border-color:var(--a1);transform:translateX(6px)}
+.step::before{content:counter(s);display:block;font-size:2.6rem;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px var(--c1);margin-bottom:.6rem}
+.step h3{margin:0 0 .3rem;font-size:1.1rem}.step p{margin:0;color:var(--muted);font-size:.95rem}
+
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.card{position:relative;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(124,140,255,.16),transparent 65%),var(--card);
+  border:1px solid var(--line);border-radius:18px;padding:1.4rem;transition:transform .3s}
+.card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;opacity:0;transition:opacity .3s;pointer-events:none;
+  background:radial-gradient(200px circle at var(--mx,50%) var(--my,50%),var(--c2),transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.card:hover{transform:translateY(-4px)}.card:hover::after{opacity:1}
+.card .icon{width:42px;height:42px;border-radius:12px;background:#1f2650;display:grid;place-items:center;font-size:1.25rem;margin-bottom:.9rem;transition:transform .4s cubic-bezier(.3,1.7,.5,1)}
+.card:hover .icon{transform:rotate(-10deg) scale(1.15)}
+.card h4{margin:0 0 .35rem;font-size:1.08rem}.card p{margin:0;color:var(--muted);font-size:.95rem}
+
+.final{margin:1rem 0 4rem;padding:2.6rem 1.5rem;border-radius:24px;text-align:center;border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,122,69,.14),rgba(124,140,255,.14))}
+.final h2{margin-bottom:1.2rem}
+.final .cta-row{justify-content:center}
+footer{max-width:1120px;margin:0 auto;padding:1.8rem 1.5rem 3rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem}
+footer a{color:var(--a2);text-decoration:none}footer a:hover{text-decoration:underline}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.win pre span{opacity:1}}
+</style>
 </head>
 <body>
-    <header>
-        <div class="brand"><div class="logo">A</div> AnyAPK</div>
-        <nav>
-            <a href="#features">Features</a>
-            <a href="https://github.com/TheNinoDev/AnyAPK">GitHub</a>
-            <a href="https://restorecord.com/verify/AnyAPK?r=974670b817eb">Discord</a>
-        </nav>
-    </header>
+<header>
+  <nav id="nav"><span class="pill"></span>
+    <a href="#how">How it works</a><a href="#features">Features</a>
+    <a href="https://github.com/TheNinoDev/AnyAPK">GitHub</a>
+    <a href="https://restorecord.com/verify/AnyAPK?r=974670b817eb">Discord</a>
+  </nav>
+</header>
 
-    <main>
-        <section class="hero">
-            <div>
-                <h1>Run Android APKs <span class="accent">natively</span> on Windows.</h1>
-                <p class="lead">
-                    AnyAPK is a portable Windows app that runs Android APKs directly,
-                    without an emulator. A built-in DEX interpreter maps
-                    <code>android.*</code> calls to Windows, and anything that is not
-                    supported yet is collected into a ready-to-paste Discord report.
-                </p>
-                <div class="cta-row">
-                    <a id="download" class="btn btn-primary" href="https://github.com/TheNinoDev/AnyAPK/releases/latest">
-                        &#11015; Download for Windows
-                    </a>
-                    <a class="btn btn-ghost" href="https://github.com/TheNinoDev/AnyAPK/releases">
-                        All releases
-                    </a>
-                </div>
-                <div class="version" id="version">Loading latest release...</div>
-            </div>
-            <div class="panel">
-                <h3>Unsupported hook report</h3>
-                <pre id="sample">-- unsupported hook: android.view.WindowManager.addView at startup
-The app needs android.view.WindowManager.addView at startup, which RunAPK
-does not support yet. (android.view.WindowManager.addView)
+<main id="top"><div id="home">
+  <div class="hero" id="hero">
+    <div>
+      <h1 id="h1">Run Android apps on Windows. No emulator.</h1>
+      <p class="lead">AnyAPK is a <span class="term" tabindex="0" data-t="Portable" data-s="One .exe" data-d="It unpacks its own files when you open it and cleans up when you close it. Nothing to install.">portable app</span> that opens APK files directly. A
+        <span class="term" tabindex="0" data-t="DEX interpreter" data-s="How it runs Android code" data-d="Reads the code inside the APK and translates <code>android.*</code> calls into Windows calls. No Android image, no virtual machine.">DEX interpreter</span>
+        does the translating, and anything it can't handle yet becomes a
+        <span class="term" tabindex="0" data-t="Discord report" data-s="Copy, paste, done" data-d="Example: <code>unsupported hook: android.view.WindowManager.addView</code>. Paste it in Discord and the gap gets tracked.">report you can paste into Discord</span>.</p>
+      <div class="cta-row">
+        <a id="download" class="btn btn-primary keep" href="https://github.com/TheNinoDev/AnyAPK/releases/latest" data-magnet>
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1d0e00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-5-5m5 5 5-5M5 20h14"/></svg></span>
+          <span class="t">Download AnyAPK<small id="dlsub">Windows, latest version</small></span>
+        </a>
+        <div class="old">
+          <button id="oldBtn" class="btn" aria-expanded="false" aria-controls="bubble">Older versions
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div id="bubble" class="bubble" hidden><div class="bub-head">Pick a version to download the app directly</div><ul id="vlist"></ul></div>
+        </div>
+        <a class="btn btn-link" href="https://github.com/TheNinoDev/AnyAPK/releases"><span>All releases</span></a>
+      </div>
+      <div class="meta" id="version">Checking for the newest version...</div>
+    </div>
+    <div class="scene"><div class="win" id="win">
+      <div class="bar"><i></i><i></i><i></i><span>AnyAPK report</span></div>
+<pre><span><b class="k">unsupported hook</b> found at startup</span><span>android.view.WindowManager.addView</span><span>Not supported yet. Copy this report and paste it in Discord:</span><span class="l">restorecord.com/verify/AnyAPK</span><span><i class="cur"></i></span></pre>
+    </div></div>
+  </div>
 
-Copy this report and paste it in Discord:
-https://restorecord.com/verify/AnyAPK?r=974670b817eb</pre>
-            </div>
-        </section>
+  <section id="how">
+    <h2>Three steps, no setup</h2>
+    <p class="sub2">You don't need an Android image, a VM or an install wizard.</p>
+    <div class="steps">
+      <div class="step"><h3>Download</h3><p>Grab the single .exe. It always comes from the newest release.</p></div>
+      <div class="step"><h3>Open an APK</h3><p>Drop an APK onto AnyAPK and it starts running natively.</p></div>
+      <div class="step"><h3>Report gaps</h3><p>If something isn't supported yet, copy the generated report into Discord.</p></div>
+    </div>
+  </section>
 
-        <section id="features">
-            <div class="features">
-                <div class="feature">
-                    <div class="icon">&#9881;</div>
-                    <h4>No emulator</h4>
-                    <p>APKs run through a native DEX interpreter. No VM, no
-                    Android image, no heavy setup.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon">&#128268;</div>
-                    <h4>Hot-swappable runtime</h4>
-                    <p>The engine is a separate, replaceable component. Update the
-                    runtime without rebuilding the app.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon">&#128221;</div>
-                    <h4>Actionable reports</h4>
-                    <p>Unsupported hooks become a copy-paste-ready report for
-                    Discord, so gaps are easy to file.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon">&#128274;</div>
-                    <h4>Portable</h4>
-                    <p>Single Windows executable. Extracts its own payload and
-                    cleans up after itself.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon">&#127760;</div>
-                    <h4>Tunneling</h4>
-                    <p>Per-app and global WireGuard tunneling with direct,
-                    tunnel, and offline network modes.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon">&#9889;</div>
-                    <h4>Fast iteration</h4>
-                    <p>App and runtime versions are tracked separately, with
-                    independent releases.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+  <section id="features">
+    <h2>Built for running apps, not for fiddling</h2>
+    <p class="sub2">Everything AnyAPK does is meant to get an APK open faster.</p>
+    <div class="features">
+      <div class="card"><div class="icon">&#9881;</div><h4>No emulator</h4><p>APKs run through a native DEX interpreter. No VM, no Android image, no heavy setup.</p></div>
+      <div class="card"><div class="icon">&#128268;</div><h4>Swappable runtime</h4><p>The engine is a separate component, so it can be updated without rebuilding the app.</p></div>
+      <div class="card"><div class="icon">&#128221;</div><h4>Ready-to-send reports</h4><p>Unsupported calls turn into a copy-paste report, so gaps are easy to file.</p></div>
+      <div class="card"><div class="icon">&#128274;</div><h4>Portable</h4><p>One Windows executable that extracts its own files and cleans up after itself.</p></div>
+      <div class="card"><div class="icon">&#127760;</div><h4>Tunneling</h4><p>Per-app and global WireGuard tunneling with direct, tunnel and offline network modes.</p></div>
+      <div class="card"><div class="icon">&#9889;</div><h4>Quick updates</h4><p>App and runtime are versioned separately and released independently.</p></div>
+    </div>
+  </section>
 
-    <footer>
-        <span>&copy; AnyAPK</span>
-        <span>
-            <a href="https://github.com/TheNinoDev/AnyAPK/releases">Releases</a> &middot;
-            <a href="https://github.com/TheNinoDev/AnyAPK">Source</a> &middot;
-            <a href="https://restorecord.com/verify/AnyAPK?r=4d15781eeabe">Discord</a>
-        </span>
-    </footer>
+  <div class="final">
+    <h2>Try your first APK in a minute.</h2>
+    <div class="cta-row"><a class="btn btn-primary" id="download2" href="https://github.com/TheNinoDev/AnyAPK/releases/latest" data-magnet>
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1d0e00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-5-5m5 5 5-5M5 20h14"/></svg></span>
+      <span class="t">Download AnyAPK<small>Newest app build</small></span></a></div>
+  </div>
+  </div>
+  <div id="vpage" hidden>
+    <a class="btn back" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>Back</a>
+    <h2>App versions</h2>
+    <p class="sub2" style="margin:0">Every release that includes the app. Hover a version for details, click it to download.</p>
+    <div class="vwrap"><ul id="vlist2"></ul></div>
+  </div>
+</main>
 
-    <script>
-        (async function () {
-            try {
-                const res = await fetch('https://api.github.com/repos/TheNinoDev/AnyAPK/releases/latest');
-                if (!res.ok) throw new Error('no release');
-                const data = await res.json();
-                const asset = (data.assets || []).find(a => /RunAPK.*\.exe$/i.test(a.name));
-                const link = asset ? asset.browser_download_url : data.html_url;
-                const btn = document.getElementById('download');
-                btn.href = link;
-                document.getElementById('version').textContent =
-                    'Latest release: ' + (data.tag_name || '') +
-                    (asset ? '  (' + asset.name + ')' : '');
-            } catch (e) {
-                document.getElementById('version').textContent =
-                    'See the releases page for the latest build.';
-            }
-        })();
-    </script>
+<footer>
+  <span>&copy; AnyAPK</span>
+  <span><a href="https://github.com/TheNinoDev/AnyAPK/releases">Releases</a> &middot; <a href="https://github.com/TheNinoDev/AnyAPK">Source</a> &middot; <a href="https://restorecord.com/verify/AnyAPK?r=4d15781eeabe">Discord</a></span>
+</footer>
+<div id="pop" role="tooltip"></div>
+
+<script>
+let lastErr='';
+const REASONS={rate:'GitHub is limiting requests from your network right now. Try again in a few minutes.','no-app':'No release with an app file was found.',net:'Could not reach GitHub.'};
+const why=()=>REASONS[lastErr]||REASONS.net;
+const verOf=r=>{const m=(r.name||'').match(/\d+(?:\.\d+)+/)||(r.tag_name||'').match(/\d+(?:\.\d+)+/);return m?'v'+m[0]:(r.tag_name||'')};
+const REPO='TheNinoDev/AnyAPK', $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const fine=matchMedia('(hover:hover) and (pointer:fine)').matches, calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- releases: app build only, runtime-only releases are skipped ---------- */
+function pickApp(assets){
+  // app file: RunAPK-<version>.exe  (runapk-engine-<version>.exe is the runtime and never matches)
+  return (assets||[]).find(x=>/^RunAPK-v?\d[\d.]*\.exe$/i.test(x.name))||null;
+}
+function slim(r){const a=pickApp(r.assets);return a&&!r.draft&&!/^runtime-/i.test(r.tag_name||'')?{tag:r.tag_name,ver:verOf({name:a.name,tag_name:r.tag_name}),name:r.name||r.tag_name,date:r.published_at,pre:r.prerelease,
+  body:(r.body||'').replace(/[#*`>\[\]\r]/g,'').replace(/\n+/g,' ').trim().slice(0,170),url:a.browser_download_url,file:a.name,size:a.size}:null}
+async function loadReleases(){
+  const k='anyapk_rel_v5',fail=m=>{lastErr=m;throw new Error(m)};
+  let c=null;try{c=JSON.parse(localStorage.getItem(k))}catch(e){}
+  if(c&&Date.now()-c.t<6e5)return c.d;
+  let r;try{r=await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=100`)}catch(e){if(c)return c.d;fail('net')}
+  if(!r.ok){if(c)return c.d;fail(r.status===403||r.status===429?'rate':'net')}
+  const raw=await r.json(),d=raw.map(slim).filter(Boolean);
+  if(!d.length){console.warn('AnyAPK: no app file found in releases',raw.map(x=>[x.tag_name,(x.assets||[]).map(a=>a.name)]));fail('no-app')}
+  try{localStorage.setItem(k,JSON.stringify({t:Date.now(),d}))}catch(e){}
+  return d;
+}
+const fmtD=d=>new Date(d).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+const mb=n=>(n/1048576).toFixed(1)+' MB';
+const dlIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-5-5m5 5 5-5M5 20h14"/></svg>';
+let rels=[];
+(async()=>{
+  try{
+    rels=await loadReleases();
+    if(!rels.length)throw new Error('none');
+    const n=rels[0];
+    ['#download','#download2'].forEach(s=>{const b=$(s);b.href=n.url;b.setAttribute('download',n.file)});
+    $('#dlsub').textContent=`${n.ver} \u00b7 ${mb(n.size)}`;
+    $('#version').innerHTML=`Newest app version: <b>${esc(n.ver)}</b>, released ${fmtD(n.date)}. Starts the download right away.`;
+    fillList();
+  }catch(e){
+    $('#version').textContent=why()+' The button opens the releases page instead.';
+    fillList();
+  }
+})();
+const LIM=5,chevR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
+const failHTML=()=>`<li class="empty">${why()} <a href="https://github.com/${REPO}/releases">Open releases</a></li>`;
+const rowHTML=(r,i,latest)=>`<li><a class="row" href="${esc(r.url)}" download="${esc(r.file)}" data-i="${i}"><span class="tag">${esc(r.ver)}</span>${latest?'<span class="pre">latest</span>':''}${r.pre?'<span class="pre">pre-release</span>':''}<span class="date">${fmtD(r.date)}</span><span class="dl">${dlIcon}</span></a></li>`;
+function fillList(){
+  const ul=$('#vlist'),old=rels.slice(1);
+  if(!rels.length){ul.innerHTML=failHTML();return}
+  if(!old.length){ul.innerHTML='<li class="empty">This is the only app version so far, and it is the one on the download button.</li>';return}
+  ul.innerHTML=old.slice(0,LIM).map((r,i)=>rowHTML(r,i+1)).join('')+(old.length>LIM?`<li><a class="more" href="#versions">Show ${old.length-LIM} more${chevR}</a></li>`:'');
+}
+function fillAll(){$('#vlist2').innerHTML=rels.map((r,i)=>rowHTML(r,i,i===0)).join('')}
+async function refresh(){
+  if(!rels.length)$('#vlist').innerHTML='<li class="skel"></li>'.repeat(3);
+  try{rels=await loadReleases()}catch(e){}
+  fillList();
+}
+
+/* ---------- older-versions bubble ---------- */
+const ob=$('#oldBtn'),bub=$('#bubble');
+function toggle(open){bub.hidden=!open;ob.setAttribute('aria-expanded',open);if(open)refresh();else hidePop()}
+ob.addEventListener('click',e=>{e.stopPropagation();toggle(bub.hidden)});
+document.addEventListener('click',e=>{if(!bub.hidden&&!bub.contains(e.target))toggle(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!bub.hidden){toggle(false);ob.focus()}});
+
+/* ---------- shared preview popover ---------- */
+const pop=$('#pop');
+function showPop(html,x,y){pop.innerHTML=html;pop.classList.add('on');
+  const w=pop.offsetWidth,h=pop.offsetHeight;
+  pop.style.left=Math.max(8,Math.min(x,innerWidth-w-8))+'px';pop.style.top=Math.max(8,Math.min(y,innerHeight-h-8))+'px'}
+function hidePop(){pop.classList.remove('on')}
+$$('.term').forEach(t=>{
+  const on=()=>{const r=t.getBoundingClientRect();showPop(`<h5>${t.dataset.t}</h5><div class="sub">${t.dataset.s}</div><p>${t.dataset.d}</p>`,r.left+r.width/2-145,r.top-pop.offsetHeight-12);
+    const h=pop.offsetHeight;pop.style.top=Math.max(8,r.top-h-12)+'px'};
+  t.addEventListener('mouseenter',on);t.addEventListener('focus',on);t.addEventListener('mouseleave',hidePop);t.addEventListener('blur',hidePop);
+});
+['#vlist','#vlist2'].forEach(q=>{const ul=$(q);
+  ul.addEventListener('mouseover',e=>{
+    const row=e.target.closest('.row');if(!row)return;const r=rels[+row.dataset.i];if(!r)return;
+    const br=ul.getBoundingClientRect(),rr=row.getBoundingClientRect();
+    showPop(`<h5>${esc(r.name)}</h5><div class="sub">${fmtD(r.date)} \u00b7 ${mb(r.size)} \u00b7 ${esc(r.file)}</div><p>${esc(r.body)||'No release notes.'}</p>`,
+      br.right+22>innerWidth-300?br.left-302:br.right+22,rr.top-10);
+  });
+  ul.addEventListener('mouseleave',hidePop);
+});
+
+/* ---------- effects (mouse devices, motion allowed) ---------- */
+// ripple on every button
+$$('.btn').forEach(b=>b.addEventListener('pointerdown',e=>{const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,d=document.createElement('span');
+  d.className='rip';d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(d);setTimeout(()=>d.remove(),650)}));
+
+// headline: split into letters that lift toward the cursor
+const h1=$('#h1'),chars=[];
+h1.setAttribute('aria-label',h1.textContent);
+h1.innerHTML=h1.textContent.split(' ').map(w=>`<span class="w" aria-hidden="true">${[...w].map(c=>`<span class="ch">${esc(c)}</span>`).join('')}</span>`).join(' ');
+$$('.ch').forEach(c=>chars.push(c));
+
+if(fine&&!calm){
+  let raf=0,mx=0,my=0;
+  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;if(raf)return;raf=requestAnimationFrame(()=>{raf=0;
+    document.body.style.setProperty('--gx',mx+'px');document.body.style.setProperty('--gy',my+'px');
+    chars.forEach(c=>{const r=c.getBoundingClientRect(),dx=mx-(r.left+r.width/2),dy=my-(r.top+r.height/2),k=Math.max(0,1-Math.hypot(dx,dy)/170);
+      c.style.transform=k?`translate(${dx*-.06*k}px,${-14*k}px) scale(${1+.28*k})`:'';c.style.color=k>.35?'var(--a2)':''});
+    // tilt hero window
+    const w=$('#win'),wr=w.getBoundingClientRect(),px=(mx-wr.left)/wr.width-.5,py=(my-wr.top)/wr.height-.5;
+    if(Math.abs(px)<1.5&&Math.abs(py)<1.5){w.style.setProperty('--ry',px*10+'deg');w.style.setProperty('--rx',-py*10+'deg')}
+  })});
+  // spotlight cards
+  $$('.card').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}));
+  // magnetic download buttons
+  $$('[data-magnet]').forEach(b=>{
+    b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.28}px) scale(1.045)`});
+    b.addEventListener('pointerleave',()=>b.style.transform='');
+  });
+  // nav pill glides between links
+  const nav=$('#nav'),pill=nav.querySelector('.pill');
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('pointerenter',()=>{pill.style.opacity=1;pill.style.width=a.offsetWidth+'px';pill.style.transform=`translateX(${a.offsetLeft}px)`}));
+  nav.addEventListener('pointerleave',()=>pill.style.opacity=0);
+}
+
+/* ---------- versions subpage (#versions) ---------- */
+function route(){
+  const v=location.hash==='#versions';
+  $('#home').hidden=v;$('#vpage').hidden=!v;toggle(false);hidePop();
+  if(v){
+    const ul=$('#vlist2');
+    if(rels.length)fillAll();else ul.innerHTML='<li class="skel"></li>'.repeat(4);
+    loadReleases().then(r=>{rels=r;fillAll()}).catch(()=>{if(!rels.length)ul.innerHTML=failHTML()});
+    scrollTo(0,0);
+  }else{
+    const id=location.hash.slice(1),t=id&&document.getElementById(id);
+    if(t)t.scrollIntoView();else scrollTo(0,0);
+  }
+}
+addEventListener('hashchange',route);route();
+</script>
 </body>
 </html>
