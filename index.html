@@ -3,42 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello!</title>
+    <title>AnyAPK - Run Android APKs natively on Windows</title>
+    <meta name="description" content="AnyAPK runs Android APKs natively on Windows without an emulator. Download the latest release.">
     <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f2f5;
+        :root {
+            --bg: #0b0f1a;
+            --card: #151a2b;
+            --accent: #ff6b35;
+            --accent2: #ffb347;
+            --text: #e8eaf0;
+            --muted: #9aa3b2;
+            --border: #2a3150;
         }
-        .card {
-            background: white;
-            padding: 2rem 3rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(1200px 600px at 50% -10%, #1a2140, var(--bg));
+            color: var(--text);
+            min-height: 100vh;
+        }
+        header {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        .logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            color: #1a0f00;
+        }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin-left: 1.25rem;
+            font-size: .95rem;
+        }
+        nav a:hover { color: var(--text); }
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 2.5rem;
+            align-items: center;
+            padding: 2rem 0 3rem;
+        }
+        @media (max-width: 860px) {
+            .hero { grid-template-columns: 1fr; }
         }
         h1 {
-            color: #1a73e8;
-            margin: 0 0 0.5rem 0;
-            font-size: 2.5rem;
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            line-height: 1.05;
+            margin: 0 0 1rem;
         }
-        p {
-            color: #5f6368;
+        .accent { color: var(--accent2); }
+        .lead {
+            color: var(--muted);
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin: 0 0 1.75rem;
+            max-width: 560px;
+        }
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .75rem;
+            align-items: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .85rem 1.25rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid transparent;
+            transition: transform .12s ease, background .12s ease;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #1a0f00;
+        }
+        .btn-ghost {
+            background: transparent;
+            border-color: var(--border);
+            color: var(--text);
+        }
+        .version {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-top: .75rem;
+        }
+        .panel {
+            background: linear-gradient(180deg, #1a2036, #12172a);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,.35);
+        }
+        .panel h3 { margin: 0 0 .75rem; font-size: 1rem; color: var(--accent2); }
+        .panel pre {
             margin: 0;
+            font-family: ui-monospace, Consolas, monospace;
+            font-size: .85rem;
+            color: #cfd6e6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .feature {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem;
+        }
+        .feature h4 { margin: 0 0 .4rem; }
+        .feature p { margin: 0; color: var(--muted); line-height: 1.5; font-size: .95rem; }
+        .icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: #1f2540;
+            display: grid;
+            place-items: center;
+            margin-bottom: .75rem;
             font-size: 1.1rem;
         }
+        footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: .9rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: .75rem;
+        }
+        footer a { color: var(--accent2); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
+    <header>
+        <div class="brand"><div class="logo">A</div> AnyAPK</div>
+        <nav>
+            <a href="#features">Features</a>
+            <a href="https://github.com/TheNinoDev/AnyAPK">GitHub</a>
+            <a href="https://restorecord.com/verify/AnyAPK?r=974670b817eb">Discord</a>
+        </nav>
+    </header>
 
-    <div class="card">
-        <h1>Hi! 👋</h1>
-        <p>Welcome to your brand new website.</p>
-    </div>
+    <main>
+        <section class="hero">
+            <div>
+                <h1>Run Android APKs <span class="accent">natively</span> on Windows.</h1>
+                <p class="lead">
+                    AnyAPK is a portable Windows app that runs Android APKs directly,
+                    without an emulator. A built-in DEX interpreter maps
+                    <code>android.*</code> calls to Windows, and anything that is not
+                    supported yet is collected into a ready-to-paste Discord report.
+                </p>
+                <div class="cta-row">
+                    <a id="download" class="btn btn-primary" href="https://github.com/TheNinoDev/AnyAPK/releases/latest">
+                        &#11015; Download for Windows
+                    </a>
+                    <a class="btn btn-ghost" href="https://github.com/TheNinoDev/AnyAPK/releases">
+                        All releases
+                    </a>
+                </div>
+                <div class="version" id="version">Loading latest release...</div>
+            </div>
+            <div class="panel">
+                <h3>Unsupported hook report</h3>
+                <pre id="sample">-- unsupported hook: android.view.WindowManager.addView at startup
+The app needs android.view.WindowManager.addView at startup, which RunAPK
+does not support yet. (android.view.WindowManager.addView)
 
+Copy this report and paste it in Discord:
+https://restorecord.com/verify/AnyAPK?r=974670b817eb</pre>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="features">
+                <div class="feature">
+                    <div class="icon">&#9881;</div>
+                    <h4>No emulator</h4>
+                    <p>APKs run through a native DEX interpreter. No VM, no
+                    Android image, no heavy setup.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">&#128268;</div>
+                    <h4>Hot-swappable runtime</h4>
+                    <p>The engine is a separate, replaceable component. Update the
+                    runtime without rebuilding the app.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">&#128221;</div>
+                    <h4>Actionable reports</h4>
+                    <p>Unsupported hooks become a copy-paste-ready report for
+                    Discord, so gaps are easy to file.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">&#128274;</div>
+                    <h4>Portable</h4>
+                    <p>Single Windows executable. Extracts its own payload and
+                    cleans up after itself.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">&#127760;</div>
+                    <h4>Tunneling</h4>
+                    <p>Per-app and global WireGuard tunneling with direct,
+                    tunnel, and offline network modes.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">&#9889;</div>
+                    <h4>Fast iteration</h4>
+                    <p>App and runtime versions are tracked separately, with
+                    independent releases.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <span>&copy; AnyAPK</span>
+        <span>
+            <a href="https://github.com/TheNinoDev/AnyAPK/releases">Releases</a> &middot;
+            <a href="https://github.com/TheNinoDev/AnyAPK">Source</a> &middot;
+            <a href="https://restorecord.com/verify/AnyAPK?r=974670b817eb">Discord</a>
+        </span>
+    </footer>
+
+    <script>
+        (async function () {
+            try {
+                const res = await fetch('https://api.github.com/repos/TheNinoDev/AnyAPK/releases/latest');
+                if (!res.ok) throw new Error('no release');
+                const data = await res.json();
+                const asset = (data.assets || []).find(a => /RunAPK.*\.exe$/i.test(a.name));
+                const link = asset ? asset.browser_download_url : data.html_url;
+                const btn = document.getElementById('download');
+                btn.href = link;
+                document.getElementById('version').textContent =
+                    'Latest release: ' + (data.tag_name || '') +
+                    (asset ? '  (' + asset.name + ')' : '');
+            } catch (e) {
+                document.getElementById('version').textContent =
+                    'See the releases page for the latest build.';
+            }
+        })();
+    </script>
 </body>
 </html>
