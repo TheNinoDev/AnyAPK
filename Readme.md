@@ -2,16 +2,16 @@
 
 <p align="center">
   <!-- GitHub Stars -->
-  <img src="https://img.shields.io/github/stars/TheNinoDev/AnyAPK?style=for-the-badge&logo=github&color=24292e" alt="GitHub Stars">
+  <img src="https://img.shields.io/github/stars/TheNinoDev/AnyAPK?style=for-the-badge&logo=github&color=24292e&nocache" alt="GitHub Stars">
 
   <!-- Total Downloads -->
-  <img src="https://img.shields.io/github/downloads/TheNinoDev/AnyAPK/total?style=for-the-badge&logo=gnu-bash&color=007ec6" alt="Total Downloads">
+  <img src="https://img.shields.io/github/downloads/TheNinoDev/AnyAPK/total?style=for-the-badge&logo=gnu-bash&color=007ec6&nocache" alt="Total Downloads">
 
   <!-- App Version (Reads from codebase/versions/app.version.txt) -->
-  <img src="https://img.shields.io/badge/dynamic/regex?style=for-the-badge&logo=android&color=34A853&label=App&url=https://raw.githubusercontent.com/TheNinoDev/AnyAPK/main/codebase/versions/app.version.txt&search=(.*)" alt="App Version">
+  <img src="https://img.shields.io/badge/dynamic/regex?style=for-the-badge&logo=android&color=34A853&label=App&url=https://raw.githubusercontent.com/TheNinoDev/AnyAPK/main/codebase/versions/app.version.txt&search=(.*)&nocache" alt="App Version">
 
   <!-- Runtime Version (Reads from codebase/versions/runtime.version.txt) -->
-  <img src="https://img.shields.io/badge/dynamic/regex?style=for-the-badge&logo=flutter&color=ff69b4&label=Runtime&url=https://raw.githubusercontent.com/TheNinoDev/AnyAPK/main/codebase/versions/runtime.version.txt&search=(.*)" alt="Runtime Version">
+  <img src="https://img.shields.io/badge/dynamic/regex?style=for-the-badge&logo=flutter&color=ff69b4&label=Runtime&url=https://raw.githubusercontent.com/TheNinoDev/AnyAPK/main/codebase/versions/runtime.version.txt&search=(.*)&nocache" alt="Runtime Version">
 </p>
 
 # This Repo is just the holder for the New builds of AnyAPK 
